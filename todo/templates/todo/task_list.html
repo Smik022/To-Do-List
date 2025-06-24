@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Welcome {{ user.username }}</h2>
+<p>
+    <a href="{% url 'home' %}" style="padding: 8px 16px; background-color: #f0f0f0; border-radius: 4px; text-decoration: none;">🏠 Go to Homepage</a>
+  </p>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add Task</button>
+</form>
+
+<ul>
+  {% for task in tasks %}
+    <li>
+      {{ task.title }} - 
+      {% if task.completed %}✅{% else %}❌{% endif %}
+      <a href="{% url 'toggle_task' task.id %}">Toggle</a> | 
+      <a href="{% url 'delete_task' task.id %}">Delete</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<form method="post" action="{% url 'logout' %}" style="display: inline;">
+  {% csrf_token %}
+  <button type="submit" style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline;">
+    Logout
+  </button>
+</form>
+{% endblock %}

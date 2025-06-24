@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div style="text-align: center; padding-top: 50px;">
+    <h1>Welcome to the To-Do App</h1>
+    <p>Manage your tasks like a boss.</p>
+
+    {% if user.is_authenticated %}
+      <h2>Hello, {{ user.username }} 👋</h2>
+
+      <div style="margin-top: 30px;">
+        <a href="{% url 'task_list' %}" style="padding: 15px 30px; font-size: 18px; background-color: #17a2b8; color: white; text-decoration: none; border-radius: 5px; margin: 10px;">Go to My Tasks</a>
+
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" style="padding: 15px 30px; font-size: 18px; background-color: #dc3545; color: white; border: none; border-radius: 5px; margin: 10px;">
+            Logout
+          </button>
+        </form>
+      </div>
+
+    {% else %}
+      <div style="margin-top: 30px;">
+        <a href="{% url 'login' %}" style="padding: 15px 30px; font-size: 18px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 10px;">Login</a>
+        <a href="{% url 'register' %}" style="padding: 15px 30px; font-size: 18px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; margin: 10px;">Register</a>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
